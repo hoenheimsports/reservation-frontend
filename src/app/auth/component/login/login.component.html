@@ -1,0 +1,26 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Connexion</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="formLogin">
+      <mat-form-field appearance="outline">
+        <mat-label>Login</mat-label>
+        <input matInput formControlName="username" />
+        <mat-error>
+          Le login est requis
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Mot de passe</mat-label>
+        <input matInput formControlName="password" type="password" />
+        <mat-error>
+          Le mot de passe est requis
+        </mat-error>
+      </mat-form-field>
+
+      <button (click)="onSubmit()" mat-raised-button color="primary" type="submit" [disabled]="formLogin.invalid">Se connecter</button>
+    </form>
+  </mat-card-content>
+</mat-card>

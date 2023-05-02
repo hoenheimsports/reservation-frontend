@@ -1,0 +1,203 @@
+<mat-form-field>
+  <mat-label>Filtre</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Bur" #input>
+</mat-form-field>
+<table mat-table [dataSource]="dataSource">
+  <ng-container  matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef>ID</th>
+    <td mat-cell  *matCellDef="let reservation">{{reservation.id}}</td>
+  </ng-container>
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Name</th>
+    <td mat-cell *matCellDef="let reservation">{{reservation.name}}</td>
+  </ng-container>
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef>email</th>
+    <td mat-cell *matCellDef="let reservation">{{reservation.email}}</td>
+  </ng-container>
+  <ng-container matColumnDef="tel">
+    <th mat-header-cell *matHeaderCellDef>Téléphone</th>
+    <td mat-cell *matCellDef="let reservation">{{reservation.tel}}</td>
+  </ng-container>
+  <ng-container matColumnDef="nbrAdult">
+    <th matTooltip="Nombre d'adultes(s)" matTooltipPosition="above" mat-header-cell *matHeaderCellDef>
+      <mat-icon class="fs-2">personn</mat-icon>
+    </th>
+    <td mat-cell *matCellDef="let reservation">{{reservation.nbrAdult}}</td>
+  </ng-container>
+  <ng-container matColumnDef="nbrTeen">
+    <th matTooltip="Nombre d'adolescent(s)" matTooltipPosition="above" mat-header-cell *matHeaderCellDef>
+      <mat-icon class="fs-3">personn</mat-icon>
+    </th>
+    <td mat-cell *matCellDef="let reservation">{{reservation.nbrTeen}}</td>
+  </ng-container>
+  <ng-container matColumnDef="nbrKid">
+    <th matTooltip="Nombre d'enfant(s)" matTooltipPosition="above" mat-header-cell *matHeaderCellDef>
+      <mat-icon class="fs-4">personn</mat-icon>
+    </th>
+    <td mat-cell *matCellDef="let reservation">{{reservation.nbrKid}}</td>
+  </ng-container>
+  <ng-container matColumnDef="payment-amount">
+    <th mat-header-cell *matHeaderCellDef>
+      <mat-icon>
+        euro
+      </mat-icon>
+    </th>
+    <td mat-cell *matCellDef="let reservation">{{reservation.payment.amount | euro}}</td>
+  </ng-container>
+  <ng-container matColumnDef="payment-type">
+    <th mat-header-cell *matHeaderCellDef>
+      Type
+    </th>
+    <td mat-cell *matCellDef="let reservation">{{reservation.payment.type | paymentTypeToFrench}}</td>
+  </ng-container>
+  <ng-container matColumnDef="payment-state">
+    <th matTooltip="Etat du paiment" matTooltipPosition="above" mat-header-cell *matHeaderCellDef>
+      <mat-icon color="secondary">
+        paid
+      </mat-icon>
+    </th>
+    <td mat-cell *matCellDef="let reservation">
+      <mat-icon matTooltipPosition="above" [matTooltip]="getPaymentStateText(reservation.payment.paymentState)" color="{{getPaymentStateColor(reservation.payment.paymentState)}}">
+        {{reservation.payment.paymentState | paymentStateToFrench:'icon'}}
+      </mat-icon>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="state">
+    <th mat-header-cell *matHeaderCellDef>
+      Etat
+    </th>
+    <td mat-cell *matCellDef="let reservation">
+      <mat-icon matTooltipPosition="above" [matTooltip]="getReservationStateText(reservation.state)" color="{{getReservationStateColor(reservation.state)}}">
+      {{reservation.state | reservationStateToFrench:'icon'}}
+      </mat-icon>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="view">
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td (click)="displayReservation(reservation.id)" mat-cell *matCellDef="let reservation">
+        <mat-icon color="primary">visibility</mat-icon >
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<mat-paginator [pageSizeOptions]="[5, 10, 20]"
+               [pageSize]="10"
+               showFirstLastButtons
+               aria-label="Select page of periodic elements">
+</mat-paginator>
+<section class="legend">
+  <p class="fw-bold">Légende :</p>
+  <p class="fw-light">Payements </p>
+  <mat-icon matTooltip="Payé" color="primary">
+    paid
+  </mat-icon>
+  <mat-icon matTooltip="En attente de paiement" color="warn">
+    paid
+  </mat-icon>
+  <mat-icon matTooltip="paiement remboursé" color="primary">
+    currency_exchange
+  </mat-icon>
+  <mat-icon matTooltip="paiement annulé" color="warn">
+    money_off
+  </mat-icon>
+
+  <p class="fw-light">Réservations </p>
+  <mat-icon matTooltip="reservation en attente de validation" color="warn">
+    pending
+  </mat-icon>
+  <mat-icon matTooltip="reservation validée" color="primary">
+    task_alt
+  </mat-icon>
+  <mat-icon matTooltip="reservation annulée" color="warn">
+    cancel
+  </mat-icon>
+  <mat-icon matTooltip="reservation en cours" color="primary">
+    nightlife
+  </mat-icon>
+</section>
+<app-reservation-perso-info class="m-2" [reservation$]="reservation$"></app-reservation-perso-info>
+<app-reservation-order-info class="m-2" [reservation$]="reservation$"></app-reservation-order-info>
+<app-reservation-payment-info class="m-2" [reservation$]="reservation$"></app-reservation-payment-info>
+
+<ng-container *ngIf="reservation$ | async as reservation">
+  <mat-card class="my-info bg-secondary">
+    <mat-card-header class="text-white">
+      <mat-card-title>Admin</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="d-flex flex-row flex-wrap" >
+
+      <mat-card class="m-1 flex-grow-1" *ngIf="reservation.payment.paymentState != 'ACCEPTED'">
+        <mat-card-header class="pt-2">
+          <mat-card-subtitle class="text-center">Encaissement</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content class="d-flex flex-column" [formGroup]="formReceipt">
+          <mat-form-field>
+          <mat-label>Nom</mat-label>
+            <input matInput placeholder="Personne qui encaisse" type="text" name="name" formControlName="nameReceipt">
+            <mat-error>Champs requis</mat-error>
+          </mat-form-field>
+          <mat-radio-group aria-label="Select an option" formControlName="paymentTypeReceipt">
+            <mat-radio-button value="cb">CB</mat-radio-button>
+            <mat-radio-button value="cheque">Cheque</mat-radio-button>
+            <mat-radio-button value="cash">Cash</mat-radio-button>
+          </mat-radio-group>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-button (click)="onSubmitFormReceipt()">Encaisser</button>
+        </mat-card-actions>
+      </mat-card>
+
+      <mat-card class="m-1 flex-grow-1" *ngIf="reservation.payment.paymentState == 'ACCEPTED'">
+        <mat-card-header class="pt-2">
+          <mat-card-subtitle class="text-center">Remboursement</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content class="d-flex flex-column" [formGroup]="formRefund">
+          <mat-form-field>
+            <mat-label>Remboursement</mat-label>
+            <input matInput placeholder="Personne qui rembourse" type="text" name="name" formControlName="nameRefund">
+            <mat-error>Champs requis</mat-error>
+          </mat-form-field>
+          <mat-radio-group aria-label="Select an option" formControlName="paymentTypeRefund">
+            <mat-radio-button value="cb">CB</mat-radio-button>
+            <mat-radio-button value="cheque">Cheque</mat-radio-button>
+            <mat-radio-button value="cash">Cash</mat-radio-button>
+          </mat-radio-group>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-button (click)="onSubmitFormRefund()">Rembourser</button>
+        </mat-card-actions>
+      </mat-card>
+
+      <mat-card class="m-1 justify-content-between flex-grow-1" *ngIf="reservation.state != 'CANCELED'">
+        <mat-card-header class="pt-2 " >
+          <mat-card-subtitle class="text-center">Annulation</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content class="text-wrap" style="width: 25vw">
+          <p>Cette action va annuler la réservation. Si la personne a déjà réglé, veuillez effectuer un remboursement</p>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-button color="warn" (click)="onCanceled()">
+            Annuler
+          </button>
+        </mat-card-actions>
+      </mat-card>
+      <mat-card class="m-1 justify-content-between flex-grow-1" *ngIf="reservation.state == 'ACCEPTED'">
+        <mat-card-header class="pt-2 ">
+          <mat-card-subtitle class="text-center">Activation</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content class="text-wrap" style="width: 25vw">
+          <p>Cette action va activer la reservation. La reservation doit être activée lorsque les personnes qui ont réservé entrent dans la salle. </p>
+        </mat-card-content>
+        <mat-card-actions align="end">
+          <button mat-button color="primary">
+            Activer
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </mat-card-content>
+  </mat-card>
+
+</ng-container>

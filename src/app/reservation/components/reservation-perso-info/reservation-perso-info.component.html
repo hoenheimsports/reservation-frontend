@@ -1,0 +1,48 @@
+<ng-container *ngIf="reservation$ | async as reservation">
+  <mat-card class="my-info bg-primary">
+    <mat-card-header class="text-white">
+      <mat-card-title>Informations personnelles</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="d-flex flex-row flex-wrap justify-content-center">
+    <mat-card class="m-1 flex-grow-0 align-items-center bg-secondary">
+      <mat-card-header class="pt-2">
+        <mat-card-subtitle class="text-center">Code</mat-card-subtitle>
+        <mat-card-title class="text-white">{{reservation.id}}</mat-card-title>
+      </mat-card-header>
+    </mat-card>
+    <mat-card class="m-1 flex-grow-1 align-items-center">
+      <mat-card-header class="pt-2">
+        <mat-card-subtitle class="text-center">Nom</mat-card-subtitle>
+        <mat-card-title>{{reservation.name}}</mat-card-title>
+      </mat-card-header>
+    </mat-card>
+      <mat-card class="m-1 flex-grow-0 align-items-center">
+        <mat-card-header class="pt-2">
+          <mat-card-subtitle class="text-center">Etat</mat-card-subtitle>
+          <mat-card-subtitle>
+            <span class="badge fs-6" [appReservationStateBgColor]="reservation.state">{{reservation.state | reservationStateToFrench}}</span>
+          </mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
+    <mat-card class="m-1 flex-grow-1 align-items-center">
+      <mat-card-header class="pt-2">
+        <mat-card-subtitle class="text-center">Email</mat-card-subtitle>
+        <mat-card-title>{{reservation.email}}</mat-card-title>
+      </mat-card-header>
+    </mat-card>
+    <mat-card class="m-1 flex-grow-1 align-items-center">
+      <mat-card-header class="pt-2">
+        <mat-card-subtitle class="text-center">Téléphone</mat-card-subtitle>
+        <mat-card-title>{{reservation.tel | phoneNumber}}</mat-card-title>
+      </mat-card-header>
+    </mat-card>
+    <mat-card class="m-1 flex-grow-1 align-items-center">
+      <mat-card-header class="pt-2">
+        <mat-card-subtitle class="text-center">Date création</mat-card-subtitle>
+        <mat-card-title>{{reservation.createDate | date:'dd/MM/yyyy'}}</mat-card-title>
+      </mat-card-header>
+    </mat-card>
+    </mat-card-content>
+  </mat-card>
+
+</ng-container>

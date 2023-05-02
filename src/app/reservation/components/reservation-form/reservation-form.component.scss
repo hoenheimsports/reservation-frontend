@@ -1,0 +1,43 @@
+.form-container {
+  max-width: 600px;
+  margin: 20px auto;
+  padding-bottom: 10vw;
+}
+
+mat-card {
+  margin: 10px 10px;
+
+}
+
+mat-form-field {
+  padding:0px 1vw;
+}
+
+.form-input-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  > * {
+    flex-grow: 1;
+  }
+}
+
+.reservation {
+  background-color: lightgrey;
+}
+
+.nombre-reservation {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap:10px 10px;
+    button {
+      flex-grow: 1;
+    }
+}
+
+
+
+
+
+

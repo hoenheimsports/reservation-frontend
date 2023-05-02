@@ -1,0 +1,25 @@
+
+
+mat-form-field {
+
+}
+
+.mat-column-nbrAdult, .mat-column-nbrTeen, .mat-column-nbrKid{
+  width: 20px;
+  text-align: center;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 0px 10px;
+}
+
+.my-info {
+
+  max-width: 800px;
+  margin:auto;
+}

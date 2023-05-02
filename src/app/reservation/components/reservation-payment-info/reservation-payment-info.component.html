@@ -1,0 +1,41 @@
+<ng-container *ngIf="reservation$ | async as reservation">
+  <mat-card class="my-info bg-primary">
+    <mat-card-header class="text-white">
+      <mat-card-title>Informations Paiement</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="d-flex flex-row flex-wrap justify-content-center">
+      <mat-card class="m-1 flex-grow-0 align-items-center">
+        <mat-card-header class="pt-2">
+          <mat-card-subtitle class="text-center">Prix</mat-card-subtitle>
+          <mat-card-title class="text-center">{{reservation.payment.amount | euro}}</mat-card-title>
+        </mat-card-header>
+      </mat-card>
+      <mat-card class="m-1 flex-grow-1 align-items-center">
+        <mat-card-header class="pt-2 ">
+          <mat-card-subtitle class="text-center">Type</mat-card-subtitle>
+          <mat-card-title class="text-center">{{reservation.payment.type | paymentTypeToFrench}}</mat-card-title>
+        </mat-card-header>
+      </mat-card>
+      <mat-card class="m-1 flex-grow-0 align-items-center">
+        <mat-card-header class="pt-2">
+          <mat-card-subtitle class="text-center">Date reçu</mat-card-subtitle>
+          <mat-card-title *ngIf="reservation.payment.dateTimePayment" class="text-center">{{reservation.payment.dateTimePayment | date:'dd/MM/yyyy'}}</mat-card-title>
+          <mat-card-title *ngIf="!reservation.payment.dateTimePayment" class="text-center">non reçu</mat-card-title>
+        </mat-card-header>
+      </mat-card>
+      <mat-card class="m-1 flex-grow-1 align-items-center">
+        <mat-card-header class="pt-2">
+          <mat-card-subtitle class="text-center">Etat</mat-card-subtitle>
+          <mat-card-subtitle class="text-center">
+            <span class="badge fs-6" [appPaymentStateBgColor]="reservation.payment.paymentState">{{reservation.payment.paymentState | paymentStateToFrench}}</span>
+          </mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
+    </mat-card-content>
+  </mat-card>
+
+</ng-container>
+
+
+
+

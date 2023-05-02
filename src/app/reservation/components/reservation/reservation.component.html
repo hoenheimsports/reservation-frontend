@@ -1,0 +1,11 @@
+
+<div class="d-flex justify-content-center">
+<mat-form-field appearance="fill" class="m-3">
+  <mat-label>Chercher réservation</mat-label>
+<input matInput placeholder="Ex : SA8AAAAAA" type="text" [formControl]="reservationIdCtrl">
+  <mat-error>Veuillez respectez le bon format, en majuscule et 9 caractères</mat-error>
+</mat-form-field>
+</div>
+<app-reservation-perso-info class="m-2" [reservation$]="reservation$"></app-reservation-perso-info>
+<app-reservation-order-info class="m-2" [reservation$]="reservation$"></app-reservation-order-info>
+<app-reservation-payment-info class="m-2" [reservation$]="reservation$"></app-reservation-payment-info>

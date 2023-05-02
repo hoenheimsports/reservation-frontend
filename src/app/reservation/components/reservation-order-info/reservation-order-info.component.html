@@ -1,0 +1,45 @@
+<ng-container *ngIf="reservation$ | async as reservation">
+  <mat-card class="my-info bg-primary">
+    <mat-card-header class="text-white">
+      <mat-card-title>Informations Réservation</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="d-flex flex-row flex-wrap justify-content-center">
+      <mat-card class="m-1 flex-grow-0 align-items-center">
+        <mat-card-header class="pt-2">
+          <mat-card-subtitle class="text-center">Place(s) adulte(s)</mat-card-subtitle>
+          <mat-card-title class="text-center">{{reservation.nbrAdult}}</mat-card-title>
+        </mat-card-header>
+      </mat-card>
+      <mat-card class="m-1 flex-grow-1 align-items-center">
+        <mat-card-header class="pt-2 ">
+          <mat-card-subtitle class="text-center">Place(s) adolescent(s)</mat-card-subtitle>
+          <mat-card-title class="text-center">{{reservation.nbrTeen}}</mat-card-title>
+        </mat-card-header>
+      </mat-card>
+      <mat-card class="m-1 flex-grow-0 align-items-center">
+        <mat-card-header class="pt-2">
+          <mat-card-subtitle class="text-center">Place(s) enfant(s)</mat-card-subtitle>
+          <mat-card-title class="text-center">{{reservation.nbrKid}}</mat-card-title>
+        </mat-card-header>
+      </mat-card>
+      <mat-card class="m-1 flex-grow-1 align-items-center">
+        <mat-card-header class="pt-2">
+          <mat-card-subtitle class="text-center">Repas</mat-card-subtitle>
+          <mat-card-title class="text-center">{{reservation.nbrMeal}}</mat-card-title>
+        </mat-card-header>
+      </mat-card>
+      <mat-card *ngIf="reservation.comments" class="m-1 flex-grow-1 align-items-center">
+        <mat-card-header class="pt-2">
+          <mat-card-subtitle class="text-center">Commentaires</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{reservation.comments}}</p>
+        </mat-card-content>
+      </mat-card>
+    </mat-card-content>
+  </mat-card>
+
+</ng-container>
+
+
+
