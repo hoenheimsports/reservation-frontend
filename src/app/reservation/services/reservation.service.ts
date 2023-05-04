@@ -71,4 +71,8 @@ export class ReservationService {
   cancelReservation(idReservation:string) {
     return this.http.get<IReservation>(environment.api+"/reservation/"+idReservation+"/cancel");
   }
+
+  validateReservation(idReservation: string) {
+    return this.http.get<IReservation>(environment.api+"/reservation/"+idReservation+"/validate");
+  }
 }

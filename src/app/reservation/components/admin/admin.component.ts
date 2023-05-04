@@ -23,8 +23,8 @@ export class AdminComponent implements OnInit{
   breakpointColumnsMap = {
     [Breakpoints.XSmall]: ['id',  'payment-amount', 'payment-type', 'payment-state', 'state','view'],
     [Breakpoints.Small]: ['id', 'name', 'payment-amount', 'payment-type', 'payment-state', 'state','view'],
-    [Breakpoints.Medium]: ['id', 'name', 'nbrAdult', 'nbrTeen', 'nbrKid', 'payment-amount', 'payment-type', 'payment-state', 'state','view'],
-    [Breakpoints.Large]: ['id', 'name', 'email', 'tel', 'nbrAdult', 'nbrTeen', 'nbrKid', 'payment-amount', 'payment-type', 'payment-state', 'state','view']
+    [Breakpoints.Medium]: ['id', 'name', 'nbrAdult', 'nbrTeen', 'nbrKid','nbrMeal', 'payment-amount', 'payment-type', 'payment-state', 'state','view'],
+    [Breakpoints.Large]: ['id', 'name', 'email', 'tel', 'nbrAdult', 'nbrTeen', 'nbrKid','nbrMeal', 'payment-amount', 'payment-type', 'payment-state', 'state','view']
   };
 
   dataSource!: MatTableDataSource<IReservation>;
@@ -33,6 +33,7 @@ export class AdminComponent implements OnInit{
 
   reservation$!: Observable<IReservation | null>;
 
+  loading:boolean=false;
   formReceipt!:FormGroup;
   formRefund!:FormGroup;
 
@@ -76,10 +77,12 @@ export class AdminComponent implements OnInit{
   }
 
   onSubmitFormReceipt():void {
+    this.loading = true;
     if(this.formReceipt.valid) {
       this.reservationService.collectPayment(this.reservationId,this.formReceipt.get('nameReceipt')?.value,this.formReceipt.get('paymentTypeReceipt')?.value)
         .subscribe(
           reservation => {
+            this.loading = false;
             this.reservation$ = of(reservation);
             this.reservationService.getAllReservation().subscribe(reservations => this.dataSource.data = reservations);
             this.snackBar.open('Reservation encaissée, le paiement et la reservation ont changé de status pour être Accepté','Fermer', {
@@ -95,10 +98,12 @@ export class AdminComponent implements OnInit{
   }
 
   onSubmitFormRefund():void {
+    this.loading = true;
     if(this.formRefund.valid) {
       this.reservationService.refundPayment(this.reservationId,this.formRefund.get('nameRefund')?.value,this.formRefund.get('paymentTypeRefund')?.value)
         .subscribe(
           reservation => {
+            this.loading = false;
             this.reservation$ = of(reservation);
             this.reservationService.getAllReservation().subscribe(reservations => this.dataSource.data = reservations);
             this.snackBar.open('Reservation remboursée, le paiement est passé à rembourser et la reservation a été annulée','Fermer', {
@@ -113,13 +118,30 @@ export class AdminComponent implements OnInit{
     }
   }
 
-  onCanceled():void {
+  onCancel():void {
+    this.loading = true;
     this.reservationService.cancelReservation(this.reservationId)
       .subscribe(
         reservation => {
+          this.loading = false;
           this.reservation$ = of(reservation);
           this.reservationService.getAllReservation().subscribe(reservations => this.dataSource.data = reservations);
           this.snackBar.open('Reservation remboursée, le paiement est passé à rembourser et la reservation a été annulée','Fermer', {
+            duration:3000,
+          })
+        }
+      );
+  }
+
+  onValidate() {
+    this.loading = true;
+    this.reservationService.validateReservation(this.reservationId)
+      .subscribe(
+        reservation => {
+          this.loading = false;
+          this.reservation$ = of(reservation);
+          this.reservationService.getAllReservation().subscribe(reservations => this.dataSource.data = reservations);
+          this.snackBar.open('Reservation validé, let\'s party','Fermer', {
             duration:3000,
           })
         }
@@ -150,6 +172,12 @@ export class AdminComponent implements OnInit{
   applyFilter(event: KeyboardEvent): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  resetFilter(input: HTMLInputElement) {
+    input.value= '';
+    this.dataSource.filter = '';
+
   }
 
 

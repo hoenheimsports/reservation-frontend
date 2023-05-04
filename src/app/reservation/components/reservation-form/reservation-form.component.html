@@ -49,12 +49,18 @@
         <mat-label>Adulte(s)</mat-label>
         <input matInput name="nbrAdult" formControlName="nbrAdult" type="number" [min]="0">
         <span matTextPrefix>{{environment.priceAdult}}€ x &nbsp;</span>
+        <span matTextSuffix (click)="onClickInfoAdultDialog()">
+        <mat-icon>contact_support</mat-icon>
+      </span>
       </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Adolescent(s)</mat-label>
       <input matInput name="nbrTeen" formControlName="nbrTeen" type="number" [min]="0">
       <span matTextPrefix>{{environment.priceTeen}}€ x &nbsp;</span>
+      <span matTextSuffix (click)="onClickInfoTeenDialog()">
+        <mat-icon>contact_support</mat-icon>
+      </span>
     </mat-form-field>
     </div>
 
@@ -63,11 +69,17 @@
       <mat-label>Enfant(s)</mat-label>
       <input matInput name="nbrKid" formControlName="nbrKid" type="number" [min]="0">
       <span matTextPrefix>{{environment.priceKid}}€ x &nbsp;</span>
+      <span matTextSuffix (click)="onClickInfoKidDialog()">
+        <mat-icon>contact_support</mat-icon>
+      </span>
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Repas</mat-label>
       <input matInput name="nbrMeal" formControlName="nbrMeal" type="number" [min]="0">
       <span matTextPrefix>{{environment.priceMeal}}€ x &nbsp;</span>
+      <span matTextSuffix (click)="onClickInfoMealDialog()">
+        <mat-icon>contact_support</mat-icon>
+      </span>
     </mat-form-field>
     </div>
   </mat-card>
@@ -116,33 +128,33 @@
   <mat-card class="form-card">
 
     <mat-card-header>
-      <mat-card-title>Payement</mat-card-title>
+      <mat-card-title>Paiement</mat-card-title>
     </mat-card-header>
 
     <mat-radio-group aria-label="Select an option" [formControl]="formPaymentPreferenceCtrl">
-      <mat-radio-button value="direct">Payement en direct</mat-radio-button>
-      <mat-radio-button value="cb">Payement en CB</mat-radio-button>
-      <mat-radio-button value="cheque">Payement par chèque</mat-radio-button>
+      <mat-radio-button value="direct">Paiement en direct</mat-radio-button>
+      <!--<mat-radio-button value="cb">Paiement en CB</mat-radio-button>-->
+      <mat-radio-button value="cheque">Paiement par chèque</mat-radio-button>
     </mat-radio-group>
     <mat-error *ngIf="formPaymentPreferenceCtrl.invalid
   && (formPaymentPreferenceCtrl.dirty
   || formPaymentPreferenceCtrl.touched
   || isSubmit)
-">Choississez un mode de payement !</mat-error>
+">Choississez un mode de paiement !</mat-error>
 
     <mat-card *ngIf="showDirectPayment$ | async">
       <mat-card-header>
         <mat-card-subtitle class="mb-3">
-          Payement en direct
+          Paiement en direct
         </mat-card-subtitle>
       </mat-card-header>
       <img src="assets/img/type_payment_accepted.svg" alt="image des payements acceptés" >
         <mat-card-content>
           <section>
 
-          <p class="mt-3">Vous pouvez payer tous les mardi de 18h15 à 18h45 en CB ou en espèce.</p>
-          <p>Le payement ce fait au Club HOUSE DU HANDBALL (Entrée dans la cours du Gymnase à coté de la salle des fêtes), 16a rue des vosges à Hoenheim </p>
-          <p>Responsable : LUC 06 ...</p>
+          <p class="mt-3">Vous pouvez payer tous les mardi de 18h15 à 18h45 en CB ou en espèces.</p>
+          <p>Le payement se fait au Club HOUSE DU HANDBALL (Entrée dans la cours du Gymnase à coté de la salle des fêtes), 16a rue des Vosges à Hoenheim </p>
+          <p>Responsable : LUC 06 29 33 29 26</p>
           </section>
           <section>
             <mat-checkbox [formControl]="formDirectPaymentAcceptationCtrl">
@@ -154,6 +166,7 @@
         </mat-card-content>
     </mat-card>
 
+<!--
     <mat-card *ngIf="showCBPayment$ | async">
       <mat-card-header>
         <mat-card-subtitle class="mb-3">
@@ -165,12 +178,13 @@
         A faire !
       </mat-card-content>
     </mat-card>
+-->
 
 
     <mat-card *ngIf="showChequePayment$ | async">
       <mat-card-header>
         <mat-card-subtitle class="mb-3">
-          Payement par chèque
+          Paiement par chèque
         </mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>

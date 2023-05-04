@@ -8,6 +8,11 @@ import {ReservationCreation} from "../../dto/reservation-creation";
 import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {environment} from "../../../../environments/environment";
+import {MatDialog} from "@angular/material/dialog";
+import {MealDialogComponent} from "../info-reservation-dialog/meal-dialog/meal-dialog.component";
+import {KidDialogComponent} from "../info-reservation-dialog/kid-dialog/kid-dialog.component";
+import {TeenDialogComponent} from "../info-reservation-dialog/teen-dialog/teen-dialog.component";
+import {AdultDialogComponent} from "../info-reservation-dialog/adult-dialog/adult-dialog.component";
 
 
 
@@ -38,7 +43,7 @@ export class ReservationFormComponent {
   amount$!: Observable<number>;
 
 
-  constructor(private snackBar:MatSnackBar,private router: Router, private formBuilder: FormBuilder, private reservationService: ReservationService) {
+  constructor(private dialog:MatDialog,private snackBar:MatSnackBar,private router: Router, private formBuilder: FormBuilder, private reservationService: ReservationService) {
   }
 
   ngOnInit(): void {
@@ -243,4 +248,22 @@ export class ReservationFormComponent {
   }
 
 
+
+
+  onClickInfoMealDialog():void {
+    this.dialog.open(MealDialogComponent)
+  }
+
+  onClickInfoKidDialog():void {
+    this.dialog.open(KidDialogComponent)
+  }
+
+  onClickInfoTeenDialog():void {
+    this.dialog.open(TeenDialogComponent)
+  }
+
+
+  onClickInfoAdultDialog():void {
+    this.dialog.open(AdultDialogComponent)
+  }
 }

@@ -20,7 +20,7 @@
         </mat-error>
       </mat-form-field>
 
-      <button (click)="onSubmit()" mat-raised-button color="primary" type="submit" [disabled]="formLogin.invalid">Se connecter</button>
+      <button  (click)="onSubmit()" mat-raised-button color="primary" type="submit" [disabled]="formLogin.invalid || loading">Se connecter</button>
     </form>
   </mat-card-content>
 </mat-card>

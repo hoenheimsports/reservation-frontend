@@ -11,6 +11,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class LoginComponent implements OnInit{
 
+  loading:boolean= false;
   formLogin!:FormGroup;
   constructor(private snackBar:MatSnackBar,private router:Router,private formBuilder:FormBuilder,private authService:AuthService) {}
 
@@ -24,9 +25,11 @@ export class LoginComponent implements OnInit{
   }
 
   onSubmit() {
+    this.loading = true;
     this.authService.login(this.formLogin.get('username')?.value,this.formLogin.get('password')?.value);
     this.authService.isAuth().subscribe(
       (isAuth) => {
+        this.loading=false;
         if(isAuth) {
           this.snackBar.open('Authentification réussi', 'Fermer', {
             duration: 3000,

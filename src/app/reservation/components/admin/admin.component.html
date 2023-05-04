@@ -1,23 +1,28 @@
-<mat-form-field>
-  <mat-label>Filtre</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Bur" #input>
-</mat-form-field>
+<section class="filter d-flex justify-content-center mt-3 mb-6">
+  <mat-form-field>
+    <mat-label>Filtre</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Bur" #input>
+    <button *ngIf="input.value" matSuffix mat-icon-button aria-label="Clear" (click)="resetFilter(input)">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</section>
 <table mat-table [dataSource]="dataSource">
   <ng-container  matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef>ID</th>
     <td mat-cell  *matCellDef="let reservation">{{reservation.id}}</td>
   </ng-container>
   <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef>Name</th>
+    <th mat-header-cell *matHeaderCellDef>Nom</th>
     <td mat-cell *matCellDef="let reservation">{{reservation.name}}</td>
   </ng-container>
   <ng-container matColumnDef="email">
-    <th mat-header-cell *matHeaderCellDef>email</th>
+    <th mat-header-cell *matHeaderCellDef>Email</th>
     <td mat-cell *matCellDef="let reservation">{{reservation.email}}</td>
   </ng-container>
   <ng-container matColumnDef="tel">
     <th mat-header-cell *matHeaderCellDef>Téléphone</th>
-    <td mat-cell *matCellDef="let reservation">{{reservation.tel}}</td>
+    <td mat-cell *matCellDef="let reservation">{{reservation.tel | phoneNumber}}</td>
   </ng-container>
   <ng-container matColumnDef="nbrAdult">
     <th matTooltip="Nombre d'adultes(s)" matTooltipPosition="above" mat-header-cell *matHeaderCellDef>
@@ -36,6 +41,12 @@
       <mat-icon class="fs-4">personn</mat-icon>
     </th>
     <td mat-cell *matCellDef="let reservation">{{reservation.nbrKid}}</td>
+  </ng-container>
+  <ng-container matColumnDef="nbrMeal">
+    <th matTooltip="Nombre de repas" matTooltipPosition="above" mat-header-cell *matHeaderCellDef>
+      <mat-icon>restaurant_menu</mat-icon>
+    </th>
+    <td mat-cell *matCellDef="let reservation">{{reservation.nbrMeal}}</td>
   </ng-container>
   <ng-container matColumnDef="payment-amount">
     <th mat-header-cell *matHeaderCellDef>
@@ -146,7 +157,7 @@
           </mat-radio-group>
         </mat-card-content>
         <mat-card-actions align="end">
-          <button mat-button (click)="onSubmitFormReceipt()">Encaisser</button>
+          <button mat-button [disabled]="loading" (click)="onSubmitFormReceipt()">Encaisser</button>
         </mat-card-actions>
       </mat-card>
 
@@ -156,7 +167,7 @@
         </mat-card-header>
         <mat-card-content class="d-flex flex-column" [formGroup]="formRefund">
           <mat-form-field>
-            <mat-label>Remboursement</mat-label>
+            <mat-label>Nom</mat-label>
             <input matInput placeholder="Personne qui rembourse" type="text" name="name" formControlName="nameRefund">
             <mat-error>Champs requis</mat-error>
           </mat-form-field>
@@ -167,7 +178,7 @@
           </mat-radio-group>
         </mat-card-content>
         <mat-card-actions align="end">
-          <button mat-button (click)="onSubmitFormRefund()">Rembourser</button>
+          <button mat-button [disabled]="loading" (click)="onSubmitFormRefund()">Rembourser</button>
         </mat-card-actions>
       </mat-card>
 
@@ -179,7 +190,7 @@
           <p>Cette action va annuler la réservation. Si la personne a déjà réglé, veuillez effectuer un remboursement</p>
         </mat-card-content>
         <mat-card-actions align="end">
-          <button mat-button color="warn" (click)="onCanceled()">
+          <button mat-button color="warn" [disabled]="loading" (click)="onCancel()">
             Annuler
           </button>
         </mat-card-actions>
@@ -192,7 +203,7 @@
           <p>Cette action va activer la reservation. La reservation doit être activée lorsque les personnes qui ont réservé entrent dans la salle. </p>
         </mat-card-content>
         <mat-card-actions align="end">
-          <button mat-button color="primary">
+          <button mat-button color="primary" [disabled]="loading" (click)="onValidate()">
             Activer
           </button>
         </mat-card-actions>

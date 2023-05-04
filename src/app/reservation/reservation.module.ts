@@ -11,6 +11,11 @@ import { ReservationPersoInfoComponent } from './components/reservation-perso-in
 import { ReservationOrderInfoComponent } from './components/reservation-order-info/reservation-order-info.component';
 import { ReservationPaymentInfoComponent } from './components/reservation-payment-info/reservation-payment-info.component';
 import { AdminComponent } from './components/admin/admin.component';
+import { MealDialogComponent } from './components/info-reservation-dialog/meal-dialog/meal-dialog.component';
+import { AdultDialogComponent } from './components/info-reservation-dialog/adult-dialog/adult-dialog.component';
+import { TeenDialogComponent } from './components/info-reservation-dialog/teen-dialog/teen-dialog.component';
+import { KidDialogComponent } from './components/info-reservation-dialog/kid-dialog/kid-dialog.component';
+import { AdminReservationValidateComponent } from './components/admin-reservation-validate/admin-reservation-validate.component';
 
 
 
@@ -23,7 +28,12 @@ import { AdminComponent } from './components/admin/admin.component';
     ReservationPersoInfoComponent,
     ReservationOrderInfoComponent,
     ReservationPaymentInfoComponent,
-    AdminComponent
+    AdminComponent,
+    MealDialogComponent,
+    AdultDialogComponent,
+    TeenDialogComponent,
+    KidDialogComponent,
+    AdminReservationValidateComponent
   ],
     imports: [
         CommonModule,

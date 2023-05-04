@@ -15,6 +15,7 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatTableModule} from "@angular/material/table";
 import {MatPaginator, MatPaginatorModule} from "@angular/material/paginator";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [],
@@ -33,6 +34,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
   MatSidenavModule,
   MatTableModule,
     MatPaginatorModule,
-  MatTooltipModule]
+  MatTooltipModule,
+  MatDialogModule]
 })
 export class MaterialsModule { }

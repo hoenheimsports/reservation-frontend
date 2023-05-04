@@ -3,6 +3,6 @@ export const environment = {
   priceTeen:5,
   priceKid:0,
   priceMeal:6,
-  api:"http://localhost:8080",
+  api:"https://reservation-backend-384215.ew.r.appspot.com",
 };
 

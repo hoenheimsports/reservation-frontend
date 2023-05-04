@@ -14,4 +14,5 @@ export interface IReservation {
   nbrKid:number,
   nbrMeal:number,
   createDate:Date,
+  qrCodeBase64:string,
 }
