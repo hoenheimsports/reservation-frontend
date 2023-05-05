@@ -23,8 +23,8 @@ export class AdminComponent implements OnInit{
   breakpointColumnsMap = {
     [Breakpoints.XSmall]: ['id',  'payment-amount', 'payment-type', 'payment-state', 'state','view'],
     [Breakpoints.Small]: ['id', 'name', 'payment-amount', 'payment-type', 'payment-state', 'state','view'],
-    [Breakpoints.Medium]: ['id', 'name', 'nbrAdult', 'nbrTeen', 'nbrKid','nbrMeal', 'payment-amount', 'payment-type', 'payment-state', 'state','view'],
-    [Breakpoints.Large]: ['id', 'name', 'email', 'tel', 'nbrAdult', 'nbrTeen', 'nbrKid','nbrMeal', 'payment-amount', 'payment-type', 'payment-state', 'state','view']
+    [Breakpoints.Medium]: ['id', 'name', 'nbrAdult', 'nbrTeen', 'nbrKid', 'payment-amount', 'payment-type', 'payment-state', 'state','view'],
+    [Breakpoints.Large]: ['id', 'name', 'email', 'tel', 'nbrAdult', 'nbrTeen', 'nbrKid', 'payment-amount', 'payment-type', 'payment-state', 'state','view']
   };
 
   dataSource!: MatTableDataSource<IReservation>;
