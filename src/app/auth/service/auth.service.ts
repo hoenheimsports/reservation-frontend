@@ -9,25 +9,26 @@ import {catchError, Observable, of} from "rxjs";
 })
 export class AuthService {
 
-  username:string = '';
-  password:string = '';
 
-  credentials!:string;
+
+  credentials!:string |undefined;
 
   constructor(private http:HttpClient) {
-    this.username = localStorage.getItem('username') || '';
-    this.password = localStorage.getItem('password') || '';
+    this.credentials = localStorage.getItem('credentials') || undefined;
   }
 
   isAuth():Observable<boolean> {
-    this.credentials = btoa(`${this.username}:${this.password}`);
-    return this.http.get<boolean>(environment.api+'/login',{
-      headers:this.getHeaders(this.credentials),
-    } ).pipe(
-      catchError( () => {
-        return of(false);
-      }),
-    );
+    let rtr:Observable<boolean> = of(false);
+    if(this.credentials)  {
+      rtr = this.http.get<boolean>(environment.api + '/login', {
+        headers: this.getHeaders(this.credentials),
+      }).pipe(
+        catchError(() => {
+          return of(false);
+        }),
+      );
+    }
+    return rtr;
   }
 
   private getHeaders(credentials:string):HttpHeaders {
@@ -37,10 +38,8 @@ export class AuthService {
   }
 
   login(username:string,password:string) {
-    this.username = username;
-    this.password = password;
-    localStorage.setItem('username', username);
-    localStorage.setItem('password', password);
+    this.credentials = btoa(`${username}:${password}`);
+    localStorage.setItem('credentials', this.credentials);
   }
 
 }

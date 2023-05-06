@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../service/auth.service";
 import {Router} from "@angular/router";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {delay} from "rxjs";
 
 @Component({
   selector: 'app-login',
@@ -27,7 +28,7 @@ export class LoginComponent implements OnInit{
   onSubmit() {
     this.loading = true;
     this.authService.login(this.formLogin.get('username')?.value,this.formLogin.get('password')?.value);
-    this.authService.isAuth().subscribe(
+    this.authService.isAuth().pipe(delay(1000)).subscribe(
       (isAuth) => {
         this.loading=false;
         if(isAuth) {

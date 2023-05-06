@@ -5,7 +5,13 @@
     <li><a routerLink="/reservation/ma-reservation">Ma réservation</a></li>
   </ul>
   <span class="spacer"></span>
-  <button routerLink="/reservation/admin" mat-icon-button aria-label="Zone admin">
-    <mat-icon>admin_panel_settings</mat-icon>
+  <div class="d-flex justify-content-center">
+  <button (click)="onRedirect('https://www.instagram.com/as_hoenheim_sports')"  mat-icon-button aria-label="Instagram">
+    <i class="bi bi-instagram"></i>
   </button>
+
+  <button (click)="onRedirect('https://www.facebook.com/hoenheimhandball')"  mat-icon-button aria-label="Facebook">
+    <i class="bi bi-facebook"></i>
+  </button>
+  </div>
 </mat-toolbar>

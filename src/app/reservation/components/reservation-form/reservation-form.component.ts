@@ -79,7 +79,7 @@ export class ReservationFormComponent {
             this.snackBar.open('Une erreur inconnu est survenue','Fermer');
             return of("ERROR");
           }),
-          delay(3000),
+          delay(1000),
           tap(() => this.loading = false),
           tap(reservationId => this.router.navigateByUrl('/reservation/ma-reservation/' + reservationId))
         )
