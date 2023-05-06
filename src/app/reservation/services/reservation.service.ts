@@ -5,6 +5,7 @@ import {HttpClient} from "@angular/common/http";
 import {catchError, map, Observable, of} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {environment} from "../../../environments/environment";
+import {AuthService} from "../../auth/service/auth.service";
 
 
 @Injectable({
@@ -12,7 +13,7 @@ import {environment} from "../../../environments/environment";
 })
 export class ReservationService {
 
-  constructor(private snackBar:MatSnackBar,private http:HttpClient) {}
+  constructor(private authService:AuthService,private snackBar:MatSnackBar,private http:HttpClient) {}
 
   public createReservation(reservation:ReservationCreation ):Observable<string> {
     type IdJson = { id:string};
@@ -22,7 +23,7 @@ export class ReservationService {
   }
 
   public getAllReservation():Observable<IReservation[]> {
-    return this.http.get<IReservation[]>(environment.api+'/reservation').pipe(
+    return this.http.get<IReservation[]>(environment.api+'/reservation',this.authService.getHeaders()).pipe(
       catchError((error) => {
         console.error('Erreur lors de la récupération des réservations :', error);
         this.snackBar.open('Erreur inconnue sur le serveur', 'Fermer');
@@ -60,19 +61,19 @@ export class ReservationService {
 
 
   collectPayment(idReservation:string,name:string,typePayment:string):Observable<IReservation | null> {
-    return this.http.put<IReservation>(environment.api+"/reservation/"+idReservation+"/collect", {name:name,typePayment:typePayment});
+    return this.http.put<IReservation>(environment.api+"/reservation/"+idReservation+"/collect", {name:name,typePayment:typePayment},this.authService.getHeaders());
   }
 
   refundPayment(idReservation:string,name:string,typePayment:string):Observable<IReservation | null> {
-    return this.http.put<IReservation>(environment.api+"/reservation/"+idReservation+"/refund", {name:name,typePayment:typePayment});
+    return this.http.put<IReservation>(environment.api+"/reservation/"+idReservation+"/refund", {name:name,typePayment:typePayment},this.authService.getHeaders());
 
   }
 
   cancelReservation(idReservation:string) {
-    return this.http.get<IReservation>(environment.api+"/reservation/"+idReservation+"/cancel");
+    return this.http.get<IReservation>(environment.api+"/reservation/"+idReservation+"/cancel",this.authService.getHeaders());
   }
 
   validateReservation(idReservation: string) {
-    return this.http.get<IReservation>(environment.api+"/reservation/"+idReservation+"/validate");
+    return this.http.get<IReservation>(environment.api+"/reservation/"+idReservation+"/validate",this.authService.getHeaders());
   }
 }

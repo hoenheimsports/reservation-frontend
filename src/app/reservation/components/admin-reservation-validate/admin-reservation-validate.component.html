@@ -1,1 +1,50 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Validation de la réservation</mat-card-title>
+  </mat-card-header>
+  <mat-card-content *ngIf="reservation$ | async as reservation; else nullTemplate">
+    <div class="alert alert-success" *ngIf="reservation.state == 'ONGOING'">RESERVATION VALIDÉE</div>
+    <div class="alert alert-danger" *ngIf="reservation.state != 'ONGOING'">ERREUR -> {{reservation.state | reservationStateToFrench}}</div>
+    <p><strong>Nom : {{reservation.name}}</strong></p>
+    <p><strong>Numéro : {{reservation.id}}</strong></p>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Item</th>
+        <th>Nombre</th>
+        <th>Prix unitaire</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>Place(s) adulte(s)</td>
+        <td>{{reservation.nbrAdult}}</td>
+        <td>10 €</td>
+      </tr>
+      <tr>
+        <td>Place(s) adolescent(s)</td>
+        <td>{{reservation.nbrTeen}}</td>
+        <td>5 €</td>
+      </tr>
+      <tr>
+        <td>Place(s) enfant(s)</td>
+        <td>{{reservation.nbrKid}}</td>
+        <td>0 €</td>
+      </tr>
+      </tbody>
+    </table>
+    <p><strong>Total : </strong> {{reservation.payment.amount | euro}}</p>
 
+    </mat-card-content>
+
+  <ng-template #nullTemplate>
+    <mat-card-content *ngIf="!loading">
+      <div class="alert alert-danger">
+        Le numero de réservation <em>{{idReservation}}</em> n'a pas été trouvé
+      </div>
+    </mat-card-content>
+  </ng-template>
+  <mat-card-footer *ngIf="loading" >
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </mat-card-footer>
+</mat-card>
