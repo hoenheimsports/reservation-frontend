@@ -1,6 +1,9 @@
 <mat-toolbar>
-  <span routerLink="/" role="button"><img src="/assets/img/logo.png" alt="logo"></span>
-  <ul>
+  <button *ngIf="isSmallScreen" (click)="sidenav.toggle()" mat-icon-button>
+  <mat-icon>menu</mat-icon>
+  </button>
+  <span *ngIf="!isSmallScreen" routerLink="/" role="button"><img src="/assets/img/logo.png" alt="logo"></span>
+  <ul *ngIf="!isSmallScreen">
     <li><a routerLinkActive="active" routerLink="/reservation/reserver">Réserver</a></li>
     <li><a routerLinkActive="active"  routerLink="/reservation/ma-reservation">Ma réservation</a></li>
     <li><a routerLinkActive="active"  routerLink="/info">Infos</a></li>
@@ -16,3 +19,17 @@
   </button>
   </div>
 </mat-toolbar>
+
+<mat-drawer-container >
+  <mat-drawer #sidenav mode="over">
+    <mat-nav-list>
+      <a mat-list-item routerLinkActive="active" routerLink="/reservation/reserver">Réserver</a>
+      <a mat-list-item routerLinkActive="active" routerLink="/reservation/ma-reservation">Ma réservation</a>
+      <a mat-list-item routerLinkActive="active" routerLink="/info">Infos</a>
+    </mat-nav-list>
+  </mat-drawer>
+  <mat-drawer-content>
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>
+
