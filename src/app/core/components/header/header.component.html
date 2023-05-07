@@ -1,8 +1,9 @@
 <mat-toolbar>
-  <span routerLink="/"><img src="/assets/img/logo.png" alt="logo"></span>
+  <span routerLink="/" role="button"><img src="/assets/img/logo.png" alt="logo"></span>
   <ul>
-    <li><a routerLink="/reservation/reserver">Réserver</a></li>
-    <li><a routerLink="/reservation/ma-reservation">Ma réservation</a></li>
+    <li><a routerLinkActive="active" routerLink="/reservation/reserver">Réserver</a></li>
+    <li><a routerLinkActive="active"  routerLink="/reservation/ma-reservation">Ma réservation</a></li>
+    <li><a routerLinkActive="active"  routerLink="/info">Infos</a></li>
   </ul>
   <span class="spacer"></span>
   <div class="d-flex justify-content-center">

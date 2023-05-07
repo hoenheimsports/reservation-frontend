@@ -1,0 +1,145 @@
+<mat-card class="card-map">
+  <mat-card-header class="flex-grow-0">
+    <mat-card-title>Lieu
+      <mat-icon>travel_explore</mat-icon>
+    </mat-card-title>
+    <mat-card-subtitle>16 rue des Vosges - Hoenheim</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2637.3768420383303!2d7.749607677474965!3d48.62177041732771!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4796c7d92becce05%3A0x3fb9da935d657906!2s16%20Rue%20des%20Vosges%2C%2067800%20H%C5%93nheim!5e0!3m2!1sfr!2sfr!4v1683465407518!5m2!1sfr!2sfr"
+      width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"></iframe>
+  </mat-card-content>
+  <mat-card-footer class="d-flex justify-content-center">
+    <button mat-raised-button matRipple="disabled" class="my-3">A partir de 18h30.</button>
+  </mat-card-footer>
+</mat-card>
+
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Restauration
+      <mat-icon>restaurant_menu</mat-icon>
+    </mat-card-title>
+    <img mat-card-md-image class="" src="assets/img/tf.jpg" alt="Tartes flambées">
+  </mat-card-header>
+  <mat-card-content class="mt-3 content-info">
+    <p>Nous vous proposons sur place des <strong>tartes flambées</strong> ainsi que une petite restauration :</p>
+    <ul>
+      <li>Moricettes au thon</li>
+      <li>Moricettes au fromage</li>
+      <li>Bretzel</li>
+      <li>Dessert</li>
+      <li>Magnum</li>
+      <li>Mister freeze</li>
+    </ul>
+  </mat-card-content>
+  <mat-card-footer class="my-3">
+  </mat-card-footer>
+</mat-card>
+
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Boissons
+      <mat-icon>sports_bar</mat-icon>
+    </mat-card-title>
+    <img mat-card-md-image class="" src="assets/img/mojito.jpg" alt="Mojito">
+  </mat-card-header>
+  <mat-card-content class="mt-3 content-info">
+    <ul>
+      <li>Mojito</li>
+      <li>Vin rosé</li>
+      <li>Crémant ICE rosé</li>
+      <li>Shooter</li>
+      <li>Litre de bière</li>
+      <li>Bière blonde</li>
+      <li>Bière roukine</li>
+    </ul>
+  </mat-card-content>
+  <mat-card-footer class="my-3">
+  </mat-card-footer>
+</mat-card>
+
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Réseaux sociaux
+      <mat-icon>group</mat-icon>
+    </mat-card-title>
+    <mat-card-subtitle>
+      Retrouver toutes les dernières informations
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content class="mt-3 content-info">
+
+    <div class="d-flex justify-content-evenly align-items-baseline">
+      <p class="fw-bold">Facebook du club</p>
+      <button color="primary" (click)="onRedirect('https://www.instagram.com/as_hoenheim_sports')" mat-mini-fab aria-label="Instagram">
+        <i class="bi bi-facebook icone"></i>
+      </button>
+    </div>
+    <div class="d-flex justify-content-evenly align-items-baseline">
+    <p class="fw-bold">Instagram du club</p>
+    <button color="primary" (click)="onRedirect('https://www.facebook.com/hoenheimhandball')"  mat-mini-fab aria-label="Facebook">
+      <i class="bi bi-instagram icone"></i>
+    </button>
+    </div>
+  </mat-card-content>
+  <mat-card-footer class="my-3">
+  </mat-card-footer>
+</mat-card>
+
+<mat-card>
+  <mat-card-header>
+    <div mat-card-avatar class="header-image"></div>
+    <mat-card-title>DJ
+      <mat-icon>music_note</mat-icon>
+    </mat-card-title>
+    <img mat-card-md-image class="" src="assets/img/dj_banniere.jpg" alt="Bannière DJ">
+  </mat-card-header>
+  <mat-card-content class="mt-3 content-info">
+    La soirée sera animée par DJ Stan de Sax
+  </mat-card-content>
+  <mat-card-footer class="my-3">
+    <mat-card-actions align="end">
+      <button color="primary" (click)="onRedirect('https://www.facebook.com/stansaxofficiel')"  mat-mini-fab aria-label="Facebook">
+        <i class="bi bi-facebook icone" ></i>
+      </button>
+    </mat-card-actions>
+  </mat-card-footer>
+
+</mat-card>
+
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Tombola
+      <mat-icon>casino</mat-icon>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="mt-3 content-info">
+    <p>Une tombola sera orgonisée, à gagner, de nombreux lots chez des commerçants hoenheimois.</p>
+    <div class="d-flex align-items-baseline justify-content-evenly"><p>Prix du ticket :</p>
+      <div class="circle">2 €</div>
+    </div>
+  </mat-card-content>
+  <mat-card-footer class="my-3">
+  </mat-card-footer>
+</mat-card>
+
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Contact
+      <mat-icon>alternate_email</mat-icon>
+      <mat-icon>call</mat-icon>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="mt-3">
+    <div class="d-flex flex-column justify-content-center align-content-center gap-3">
+      <a href="mailto:jipize@gmail.com" mat-raised-button>Responsable</a>
+      <a href="mailto:reservation@hoenheimsports.club" mat-raised-button>Reservation</a>
+      <a href="mailto:sebastien.burckhardt@hoenheimsports.club" mat-raised-button>Site internet</a></div>
+  </mat-card-content>
+  <mat-card-footer class="my-3">
+  </mat-card-footer>
+</mat-card>
+
+

@@ -16,14 +16,25 @@ li {
   padding-right: 10px;
 }
 a {
-  color: white;
+  color: #fff;
   text-decoration: none;
   font-weight: normal;
+  font-size: 1.1em;
+  padding: 8px 12px; /* Ajouter un peu de padding pour l'effet d'ombre */
+  background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0)); /* Effet d'ombre radial avec transparence */
   &:hover {
     text-decoration: underline;
+    color: #fff;
+    background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0)); /* Intensifier l'effet d'ombre radial au survol */
   }
 }
 
 .spacer {
   flex: 1 1 auto;
+}
+
+.active {
+  font-weight: bold; /* Mettre en gras le texte du lien actif */
+  color: #fff; /* Changer la couleur du lien actif en blanc */
+  background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0)); /* Intensifier l'effet d'ombre radial pour le lien actif */
 }
