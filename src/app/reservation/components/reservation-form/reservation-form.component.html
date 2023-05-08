@@ -157,7 +157,7 @@
           <section>
             <mat-checkbox [formControl]="formDirectPaymentAcceptationCtrl">
             <span [ngClass]="{ 'error': formDirectPaymentAcceptationCtrl.invalid && (formDirectPaymentAcceptationCtrl.dirty || formDirectPaymentAcceptationCtrl.touched || isSubmit) }">
-              Je m'engage à régler avant le 21 Juin 2023*
+              Votre inscription n'est acceptée qu'après avoir été payée, et dans les limites des places disponible*
             </span>
             </mat-checkbox>
           </section>
@@ -199,7 +199,7 @@
         <section>
           <mat-checkbox [formControl]="formChequePaymentAcceptationCtrl">
             <span [ngClass]="{ 'error': formChequePaymentAcceptationCtrl.invalid && (formChequePaymentAcceptationCtrl.dirty || formChequePaymentAcceptationCtrl.touched || isSubmit) }">
-              Je m'engage à régler avant le 18 Juin 2023*
+              Votre inscription n'est acceptée qu'après avoir été payée, et dans les limites des places disponible*
             </span>
           </mat-checkbox>
 
