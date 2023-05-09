@@ -69,11 +69,19 @@ export class ReservationService {
 
   }
 
-  cancelReservation(idReservation:string) {
+  cancelReservation(idReservation:string):Observable<IReservation | null> {
     return this.http.get<IReservation>(environment.api+"/reservation/"+idReservation+"/cancel",this.authService.getHeaders());
   }
 
-  validateReservation(idReservation: string) {
+  validateReservation(idReservation: string): Observable<IReservation | null> {
     return this.http.get<IReservation>(environment.api+"/reservation/"+idReservation+"/validate",this.authService.getHeaders());
+  }
+
+  resendValidationEmail(idReservation:string):Observable<boolean> {
+      return this.http.get<void>(environment.api+"/reservation/"+idReservation+"/resend",this.authService.getHeaders())
+        .pipe(
+          map(() => true),
+          catchError(() => of(false))
+        );
   }
 }

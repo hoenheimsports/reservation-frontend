@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {ReservationService} from "../../services/reservation.service";
 import {IReservation} from "../../models/reservation.model";
@@ -16,15 +16,15 @@ import {MatSnackBar} from "@angular/material/snack-bar";
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss']
 })
-export class AdminComponent implements OnInit{
+export class AdminComponent implements OnInit {
 
   colorPaymentState: 'primary' | 'secondary' | 'warn' = 'primary';
 
   breakpointColumnsMap = {
-    [Breakpoints.XSmall]: ['id',  'payment-amount', 'payment-type', 'payment-state', 'state','view'],
-    [Breakpoints.Small]: ['id', 'name', 'payment-amount', 'payment-type', 'payment-state', 'state','view'],
-    [Breakpoints.Medium]: ['id', 'name', 'nbrAdult', 'nbrTeen', 'nbrKid', 'payment-amount', 'payment-type', 'payment-state', 'state','view'],
-    [Breakpoints.Large]: ['id', 'name', 'email', 'tel', 'nbrAdult', 'nbrTeen', 'nbrKid', 'payment-amount', 'payment-type', 'payment-state', 'state','view']
+    [Breakpoints.XSmall]: ['id', 'payment-amount', 'payment-type', 'payment-state', 'state', 'view'],
+    [Breakpoints.Small]: ['id', 'name', 'payment-amount', 'payment-type', 'payment-state', 'state', 'view'],
+    [Breakpoints.Medium]: ['id', 'name', 'nbrAdult', 'nbrTeen', 'nbrKid', 'payment-amount', 'payment-type', 'payment-state', 'state', 'view'],
+    [Breakpoints.Large]: ['id', 'name', 'email', 'tel', 'nbrAdult', 'nbrTeen', 'nbrKid', 'payment-amount', 'payment-type', 'payment-state', 'state', 'view']
   };
 
   dataSource!: MatTableDataSource<IReservation>;
@@ -33,31 +33,32 @@ export class AdminComponent implements OnInit{
 
   reservation$!: Observable<IReservation | null>;
 
-  loading:boolean=false;
-  formReceipt!:FormGroup;
-  formRefund!:FormGroup;
+  loading: boolean = false;
+  formReceipt!: FormGroup;
+  formRefund!: FormGroup;
 
   reservationId!: string;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
 
-  constructor(private snackBar:MatSnackBar,private formBuilder:FormBuilder,private breakpointObserver: BreakpointObserver, private router: Router, private reservationService: ReservationService) {
+  constructor(private snackBar: MatSnackBar, private formBuilder: FormBuilder, private breakpointObserver: BreakpointObserver, private router: Router, private reservationService: ReservationService) {
     this.displayedColumns = this.breakpointColumnsMap[Breakpoints.Large];
   }
 
   SmallBreakPoints!: Observable<boolean>;
 
+
   ngOnInit(): void {
 
-    this.formReceipt = this.formBuilder.group( {
-      nameReceipt:[null,[Validators.required]],
-      paymentTypeReceipt:['cb']
+    this.formReceipt = this.formBuilder.group({
+      nameReceipt: [null, [Validators.required]],
+      paymentTypeReceipt: ['cb']
     })
 
-    this.formRefund = this.formBuilder.group( {
-      nameRefund:[null,[Validators.required]],
-      paymentTypeRefund:['cb']
+    this.formRefund = this.formBuilder.group({
+      nameRefund: [null, [Validators.required]],
+      paymentTypeRefund: ['cb']
     })
 
     Object.keys(this.breakpointColumnsMap).forEach(breakpoint => {
@@ -76,49 +77,49 @@ export class AdminComponent implements OnInit{
     )
   }
 
-  onSubmitFormReceipt():void {
+  onSubmitFormReceipt(): void {
     this.loading = true;
-    if(this.formReceipt.valid) {
-      this.reservationService.collectPayment(this.reservationId,this.formReceipt.get('nameReceipt')?.value,this.formReceipt.get('paymentTypeReceipt')?.value)
+    if (this.formReceipt.valid) {
+      this.reservationService.collectPayment(this.reservationId, this.formReceipt.get('nameReceipt')?.value, this.formReceipt.get('paymentTypeReceipt')?.value)
         .subscribe(
           reservation => {
             this.loading = false;
             this.reservation$ = of(reservation);
             this.reservationService.getAllReservation().subscribe(reservations => this.dataSource.data = reservations);
-            this.snackBar.open('Reservation encaissée, le paiement et la reservation ont changé de status pour être Accepté','Fermer', {
-              duration:3000,
+            this.snackBar.open('Reservation encaissée, le paiement et la reservation ont changé de status pour être Accepté', 'Fermer', {
+              duration: 3000,
             })
           }
         );
     } else {
-      this.snackBar.open('Le formulaire n\'est pas valide (en rouge)','Fermer', {
-        duration:5000,
+      this.snackBar.open('Le formulaire n\'est pas valide (en rouge)', 'Fermer', {
+        duration: 5000,
       })
     }
   }
 
-  onSubmitFormRefund():void {
+  onSubmitFormRefund(): void {
     this.loading = true;
-    if(this.formRefund.valid) {
-      this.reservationService.refundPayment(this.reservationId,this.formRefund.get('nameRefund')?.value,this.formRefund.get('paymentTypeRefund')?.value)
+    if (this.formRefund.valid) {
+      this.reservationService.refundPayment(this.reservationId, this.formRefund.get('nameRefund')?.value, this.formRefund.get('paymentTypeRefund')?.value)
         .subscribe(
           reservation => {
             this.loading = false;
             this.reservation$ = of(reservation);
             this.reservationService.getAllReservation().subscribe(reservations => this.dataSource.data = reservations);
-            this.snackBar.open('Reservation remboursée, le paiement est passé à rembourser et la reservation a été annulée','Fermer', {
-              duration:3000,
+            this.snackBar.open('Reservation remboursée, le paiement est passé à rembourser et la reservation a été annulée', 'Fermer', {
+              duration: 3000,
             })
           }
         );
     } else {
-      this.snackBar.open('Le formulaire n\'est pas valide (en rouge)','Fermer', {
-        duration:5000,
+      this.snackBar.open('Le formulaire n\'est pas valide (en rouge)', 'Fermer', {
+        duration: 5000,
       })
     }
   }
 
-  onCancel():void {
+  onCancel(): void {
     this.loading = true;
     this.reservationService.cancelReservation(this.reservationId)
       .subscribe(
@@ -126,8 +127,8 @@ export class AdminComponent implements OnInit{
           this.loading = false;
           this.reservation$ = of(reservation);
           this.reservationService.getAllReservation().subscribe(reservations => this.dataSource.data = reservations);
-          this.snackBar.open('Reservation remboursée, le paiement est passé à rembourser et la reservation a été annulée','Fermer', {
-            duration:3000,
+          this.snackBar.open('Reservation remboursée, le paiement est passé à rembourser et la reservation a été annulée', 'Fermer', {
+            duration: 3000,
           })
         }
       );
@@ -136,31 +137,47 @@ export class AdminComponent implements OnInit{
   onValidate() {
     this.loading = true;
     this.reservationService.validateReservation(this.reservationId).pipe(
-      catchError( () => {
+      catchError(() => {
         this.loading = false;
-        this.snackBar.open("erreur","fermer");
+        this.snackBar.open("erreur", "fermer");
         return of(null)
       })
-    )
-      .subscribe(
+    ).subscribe(
         reservation => {
           this.loading = false;
           this.reservation$ = of(reservation);
           this.reservationService.getAllReservation().subscribe(reservations => this.dataSource.data = reservations);
-          let message ='La réservation n\'a pas été validée, elle n\'est pas dans l\'etat ACCEPTÉ.';
-          if(reservation!=null && reservation.state == ReservationState.ONGOING) {
+          let message = 'La réservation n\'a pas été validée, elle n\'est pas dans l\'etat ACCEPTÉ.';
+          if (reservation != null && reservation.state == ReservationState.ONGOING) {
             message = "La réservation a été validée : " + reservation.id;
           }
           this.snackBar.open(message, "fermer", {
-            duration:4000,
+            duration: 4000,
           });
         }
       );
   }
 
 
-  displayReservation(reservationId:string):void {
-    this.reservationId= reservationId;
+  onResendEmailConfirmation() {
+    this.loading = true;
+    this.reservationService.resendValidationEmail(this.reservationId).subscribe(
+      reponse => {
+        this.loading = false;
+        let message = "L'email de validation a été renvoyé";
+        if(!reponse) {
+          message = "Erreur inconnu";
+        }
+        this.snackBar.open(message, "fermer", {
+          duration: 4000,
+        });
+      }
+    )
+  }
+
+
+  displayReservation(reservationId: string): void {
+    this.reservationId = reservationId;
     this.reservation$ = this.reservationService.getReservationById(reservationId);
   }
 
@@ -185,7 +202,7 @@ export class AdminComponent implements OnInit{
   }
 
   resetFilter(input: HTMLInputElement) {
-    input.value= '';
+    input.value = '';
     this.dataSource.filter = '';
 
   }
@@ -235,7 +252,6 @@ export class AdminComponent implements OnInit{
         return '';
     }
   }
-
 
 
 }

@@ -42,7 +42,7 @@ constructor(private route:ActivatedRoute,private reservationService:ReservationS
           tap(() => this.loading = false),
           tap((reservation) => {
             let message ='La réservation n\'a pas été validée, elle n\'est pas dans l\'etat ACCEPTÉ.';
-            if(reservation.state == ReservationState.ONGOING) {
+            if(reservation != null && reservation.state == ReservationState.ONGOING) {
               message = "La réservation a été validée : " + reservation.id;
             }
             this.snackBar.open(message, "fermer", {
