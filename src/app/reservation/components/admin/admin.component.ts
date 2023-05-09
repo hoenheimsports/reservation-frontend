@@ -2,7 +2,7 @@ import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {ReservationService} from "../../services/reservation.service";
 import {IReservation} from "../../models/reservation.model";
-import {Observable, of} from "rxjs";
+import {catchError, Observable, of} from "rxjs";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {PaymentState} from "../../models/payment-state";
@@ -135,15 +135,25 @@ export class AdminComponent implements OnInit{
 
   onValidate() {
     this.loading = true;
-    this.reservationService.validateReservation(this.reservationId)
+    this.reservationService.validateReservation(this.reservationId).pipe(
+      catchError( () => {
+        this.loading = false;
+        this.snackBar.open("erreur","fermer");
+        return of(null)
+      })
+    )
       .subscribe(
         reservation => {
           this.loading = false;
           this.reservation$ = of(reservation);
           this.reservationService.getAllReservation().subscribe(reservations => this.dataSource.data = reservations);
-          this.snackBar.open('Reservation validé, let\'s party','Fermer', {
-            duration:3000,
-          })
+          let message ='La réservation n\'a pas été validée, elle n\'est pas dans l\'etat ACCEPTÉ.';
+          if(reservation!=null && reservation.state == ReservationState.ONGOING) {
+            message = "La réservation a été validée : " + reservation.id;
+          }
+          this.snackBar.open(message, "fermer", {
+            duration:4000,
+          });
         }
       );
   }
