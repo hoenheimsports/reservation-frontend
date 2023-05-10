@@ -1,4 +1,124 @@
-<section class="filter d-flex justify-content-center mt-3 mb-6">
+<section *ngIf="statistic$ | async as stat" class="pannel gap-3 d-flex justify-content-center mt-3  mb-3">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        Argent récolté
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="flex-grow-1 d-flex justify-content-center align-items-center">
+      <div class="total-price d-flex align-items-center"><p>{{stat.amountTotal | euro}}</p></div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        Places adultes
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <ul>
+        <li>
+          <mat-icon color="warn">
+            pending
+          </mat-icon>
+          En attente : <span>{{stat.statAdult.pending}}</span>
+        </li>
+        <li>
+          <mat-icon  color="warn">
+            cancel
+          </mat-icon>
+          Annulée(s) : <span>{{stat.statAdult.canceled}}</span>
+        </li>
+        <li>
+          <mat-icon  color="primary">
+            task_alt
+          </mat-icon>
+          Validée(s) : <span>{{stat.statAdult.accepted}}</span>
+        </li>
+        <li>
+          <mat-icon  color="primary">
+            nightlife
+          </mat-icon>
+          En cours : <span>{{stat.statAdult.ongoing}}</span>
+        </li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        Places adolescents
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <ul>
+        <li>
+          <mat-icon  color="warn">
+            pending
+          </mat-icon>
+          En attente : <span>{{stat.statTeen.pending}}</span>
+        </li>
+        <li>
+          <mat-icon color="warn">
+            cancel
+          </mat-icon>
+          Annulée(s) : <span>{{stat.statTeen.canceled}}</span>
+        </li>
+        <li>
+          <mat-icon  color="primary">
+            task_alt
+          </mat-icon>
+          Validée(s) : <span>{{stat.statTeen.accepted}}</span>
+        </li>
+        <li>
+          <mat-icon  color="primary">
+            nightlife
+          </mat-icon>
+          En cours : <span>{{stat.statTeen.ongoing}}</span>
+        </li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        Places enfants
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <ul>
+        <li>
+          <mat-icon  color="warn">
+            pending
+          </mat-icon>
+          En attente : <span>{{stat.statKid.pending}}</span>
+        </li>
+        <li>
+          <mat-icon color="warn">
+            cancel
+          </mat-icon>
+          Annulée(s) : <span>{{stat.statKid.canceled}}</span>
+        </li>
+        <li>
+          <mat-icon color="primary">
+            task_alt
+          </mat-icon>
+          Validée(s) : <span>{{stat.statKid.accepted}}</span>
+        </li>
+        <li>
+          <mat-icon  color="primary">
+            nightlife
+          </mat-icon>
+          En cours : <span>{{stat.statKid.ongoing}}</span>
+        </li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+</section>
+<section class="filter d-flex justify-content-center">
   <mat-form-field>
     <mat-label>Filtre</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Bur" #input>
@@ -8,9 +128,9 @@
   </mat-form-field>
 </section>
 <table mat-table [dataSource]="dataSource">
-  <ng-container  matColumnDef="id">
+  <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef>ID</th>
-    <td mat-cell  *matCellDef="let reservation">{{reservation.id}}</td>
+    <td mat-cell *matCellDef="let reservation">{{reservation.id}}</td>
   </ng-container>
   <ng-container matColumnDef="name">
     <th mat-header-cell *matHeaderCellDef>Nom</th>
@@ -69,7 +189,8 @@
       </mat-icon>
     </th>
     <td mat-cell *matCellDef="let reservation">
-      <mat-icon matTooltipPosition="above" [matTooltip]="getPaymentStateText(reservation.payment.paymentState)" color="{{getPaymentStateColor(reservation.payment.paymentState)}}">
+      <mat-icon matTooltipPosition="above" [matTooltip]="getPaymentStateText(reservation.payment.paymentState)"
+                color="{{getPaymentStateColor(reservation.payment.paymentState)}}">
         {{reservation.payment.paymentState | paymentStateToFrench:'icon'}}
       </mat-icon>
     </td>
@@ -79,15 +200,16 @@
       Etat
     </th>
     <td mat-cell *matCellDef="let reservation">
-      <mat-icon matTooltipPosition="above" [matTooltip]="getReservationStateText(reservation.state)" color="{{getReservationStateColor(reservation.state)}}">
-      {{reservation.state | reservationStateToFrench:'icon'}}
+      <mat-icon matTooltipPosition="above" [matTooltip]="getReservationStateText(reservation.state)"
+                color="{{getReservationStateColor(reservation.state)}}">
+        {{reservation.state | reservationStateToFrench:'icon'}}
       </mat-icon>
     </td>
   </ng-container>
   <ng-container matColumnDef="view">
     <th mat-header-cell *matHeaderCellDef></th>
     <td (click)="displayReservation(reservation.id)" mat-cell *matCellDef="let reservation">
-        <mat-icon color="primary">visibility</mat-icon >
+      <mat-icon color="primary">visibility</mat-icon>
     </td>
   </ng-container>
 
@@ -138,7 +260,7 @@
     <mat-card-header class="text-white">
       <mat-card-title>Admin</mat-card-title>
     </mat-card-header>
-    <mat-card-content class="d-flex flex-row flex-wrap" >
+    <mat-card-content class="d-flex flex-row flex-wrap">
 
       <mat-card class="m-1 flex-grow-1" *ngIf="reservation.payment.paymentState != 'ACCEPTED'">
         <mat-card-header class="pt-2">
@@ -146,7 +268,7 @@
         </mat-card-header>
         <mat-card-content class="d-flex flex-column" [formGroup]="formReceipt">
           <mat-form-field>
-          <mat-label>Nom</mat-label>
+            <mat-label>Nom</mat-label>
             <input matInput placeholder="Personne qui encaisse" type="text" name="name" formControlName="nameReceipt">
             <mat-error>Champs requis</mat-error>
           </mat-form-field>
@@ -183,11 +305,12 @@
       </mat-card>
 
       <mat-card class="m-1 justify-content-between flex-grow-1" *ngIf="reservation.state != 'CANCELED'">
-        <mat-card-header class="pt-2 " >
+        <mat-card-header class="pt-2 ">
           <mat-card-subtitle class="text-center">Annulation</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content class="text-wrap" style="width: 25vw">
-          <p>Cette action va annuler la réservation. Si la personne a déjà réglé, veuillez effectuer un remboursement</p>
+          <p>Cette action va annuler la réservation. Si la personne a déjà réglé, veuillez effectuer un
+            remboursement</p>
         </mat-card-content>
         <mat-card-actions align="end">
           <button mat-button color="warn" [disabled]="loading" (click)="onCancel()">
@@ -200,7 +323,8 @@
           <mat-card-subtitle class="text-center">Activation</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content class="text-wrap" style="width: 25vw">
-          <p>Cette action va activer la reservation. La reservation doit être activée lorsque les personnes qui ont réservé entrent dans la salle. </p>
+          <p>Cette action va activer la reservation. La reservation doit être activée lorsque les personnes qui ont
+            réservé entrent dans la salle. </p>
         </mat-card-content>
         <mat-card-actions align="end">
           <button mat-button color="primary" [disabled]="loading" (click)="onValidate()">
@@ -210,7 +334,9 @@
       </mat-card>
     </mat-card-content>
     <mat-card-actions>
-      <button color="primary" mat-raised-button [disabled]="loading" (click)="onResendEmailConfirmation()" > Renvoyer email d'inscription </button>
+      <button color="primary" mat-raised-button [disabled]="loading" (click)="onResendEmailConfirmation()"> Renvoyer
+        email d'inscription
+      </button>
     </mat-card-actions>
   </mat-card>
 

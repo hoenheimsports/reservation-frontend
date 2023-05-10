@@ -1,12 +1,92 @@
-.filter{
+.pannel {
 
+  mat-card-content {
+    ul {
+      list-style: none;
+      padding: 0;
+
+      li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem;
+        margin: 0.5rem 0;
+        font-size: 0.85em;
+        transition: all 0.3s ease;
+        border-radius: 5px;
+        font-weight: bold;
+
+        &:hover {
+          transform: scale(1.05);
+          cursor: pointer;
+          span {
+            transform: scale(1.1);
+            box-shadow: 0px 0px 15px rgba(0,0,0,0.3);
+          }
+        }
+        span {
+          display: inline-block;
+          margin-left: 0.5em;
+          padding: 0.2em 0.5em;
+          font-size: 1.4em;
+          font-weight: bold;
+          color: #000;
+          background-color: #f0f0f0;
+          border: 2px solid #000;
+          border-radius: 10px;
+          transition: all 0.3s ease;
+        }
+
+
+        &:nth-child(1) {
+          background-color: #ffeedd;
+          color: #ffaa00;
+
+        }
+        &:nth-child(2) {
+          background-color: #ffdddd;
+          color: #ff0000;
+        }
+        &:nth-child(3) {
+          background-color: #ddffdd;
+          color: #2d6b2d;
+        }
+        &:nth-child(4) {
+          background-color: #ddddff;
+          color: #0000ff;
+        }
+      }
+    }
+  }
 }
+
+.total-price {
+  height: 80%;
+  font-size: 4em;
+  font-weight: bold;
+  color: #333;
+  background-color: #f8f8f8;
+  padding: 1em;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  text-align: center;
+
+  &:hover {
+    color: #fff;
+    background-color: #007BFF;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+  }
+}
+
+
 
 mat-form-field {
 
 }
 
-.mat-column-nbrAdult, .mat-column-nbrTeen, .mat-column-nbrKid{
+.mat-column-nbrAdult, .mat-column-nbrTeen, .mat-column-nbrKid {
   width: 20px;
   text-align: center;
 }
@@ -23,5 +103,6 @@ mat-form-field {
 .my-info {
 
   max-width: 800px;
-  margin:auto;
+  margin: auto;
 }
+

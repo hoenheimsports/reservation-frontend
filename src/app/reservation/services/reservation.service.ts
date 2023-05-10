@@ -6,6 +6,7 @@ import {catchError, map, Observable, of} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {environment} from "../../../environments/environment";
 import {AuthService} from "../../auth/service/auth.service";
+import {StatisticReservation} from "../models/statistic-reservation";
 
 
 @Injectable({
@@ -83,5 +84,9 @@ export class ReservationService {
           map(() => true),
           catchError(() => of(false))
         );
+  }
+
+  statisticReservation():Observable<StatisticReservation> {
+    return this.http.get<StatisticReservation>(environment.api+"/reservation/stat",this.authService.getHeaders());
   }
 }

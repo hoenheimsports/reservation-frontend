@@ -10,6 +10,7 @@ import {ReservationState} from "../../models/reservation-state";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {StatisticReservation} from "../../models/statistic-reservation";
 
 @Component({
   selector: 'app-admin',
@@ -32,6 +33,8 @@ export class AdminComponent implements OnInit {
   displayedColumns: string[];
 
   reservation$!: Observable<IReservation | null>;
+
+  statistic$!: Observable<StatisticReservation>;
 
   loading: boolean = false;
   formReceipt!: FormGroup;
@@ -69,12 +72,19 @@ export class AdminComponent implements OnInit {
       });
     });
 
+    this.statistic$ = this.reservationService.statisticReservation();
+
     this.reservationService.getAllReservation().subscribe(
       reservations => {
         this.dataSource = new MatTableDataSource<IReservation>(reservations);
         this.dataSource.paginator = this.paginator;
       }
     )
+  }
+
+  private upload():void {
+    this.reservationService.getAllReservation().subscribe(reservations => this.dataSource.data = reservations);
+    this.statistic$ = this.reservationService.statisticReservation();
   }
 
   onSubmitFormReceipt(): void {
@@ -85,7 +95,7 @@ export class AdminComponent implements OnInit {
           reservation => {
             this.loading = false;
             this.reservation$ = of(reservation);
-            this.reservationService.getAllReservation().subscribe(reservations => this.dataSource.data = reservations);
+            this.upload();
             this.snackBar.open('Reservation encaissée, le paiement et la reservation ont changé de status pour être Accepté', 'Fermer', {
               duration: 3000,
             })
@@ -106,7 +116,7 @@ export class AdminComponent implements OnInit {
           reservation => {
             this.loading = false;
             this.reservation$ = of(reservation);
-            this.reservationService.getAllReservation().subscribe(reservations => this.dataSource.data = reservations);
+            this.upload();
             this.snackBar.open('Reservation remboursée, le paiement est passé à rembourser et la reservation a été annulée', 'Fermer', {
               duration: 3000,
             })
@@ -126,7 +136,7 @@ export class AdminComponent implements OnInit {
         reservation => {
           this.loading = false;
           this.reservation$ = of(reservation);
-          this.reservationService.getAllReservation().subscribe(reservations => this.dataSource.data = reservations);
+          this.upload();
           this.snackBar.open('Reservation remboursée, le paiement est passé à rembourser et la reservation a été annulée', 'Fermer', {
             duration: 3000,
           })
@@ -146,7 +156,7 @@ export class AdminComponent implements OnInit {
         reservation => {
           this.loading = false;
           this.reservation$ = of(reservation);
-          this.reservationService.getAllReservation().subscribe(reservations => this.dataSource.data = reservations);
+          this.upload();
           let message = 'La réservation n\'a pas été validée, elle n\'est pas dans l\'etat ACCEPTÉ.';
           if (reservation != null && reservation.state == ReservationState.ONGOING) {
             message = "La réservation a été validée : " + reservation.id;
