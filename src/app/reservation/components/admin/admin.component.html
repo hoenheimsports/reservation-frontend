@@ -118,14 +118,19 @@
     </mat-card-content>
   </mat-card>
 </section>
-<section class="filter d-flex justify-content-center">
-  <mat-form-field>
+<section class="filter d-flex justify-content-between">
+  <mat-form-field class="flex-grow-1 me-5">
     <mat-label>Filtre</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Bur" #input>
     <button *ngIf="input.value" matSuffix mat-icon-button aria-label="Clear" (click)="resetFilter(input)">
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>
+  <button class="mx-5" color="primary" (click)="onDownload()" mat-fab>
+    <mat-icon>
+      download
+    </mat-icon>
+  </button>
 </section>
 <table mat-table [dataSource]="dataSource">
   <ng-container matColumnDef="id">

@@ -11,6 +11,7 @@ import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {StatisticReservation} from "../../models/statistic-reservation";
+import * as Papa from 'papaparse';
 
 @Component({
   selector: 'app-admin',
@@ -264,5 +265,59 @@ export class AdminComponent implements OnInit {
   }
 
 
+  onDownload() {
+    const blob = new Blob([this.convertToCsv(this.dataSource.data)], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'data.csv';
+    link.click();
+  }
+
+
+
+  private convertToCsv(reservations: IReservation[]):string {
+    const headers = [
+      'id',
+      'etat de la réservation',
+      'nom',
+      'tél',
+      'email',
+      'places adultes',
+      'places adolescents',
+      'places enfants',
+      'prix total',
+      'type de paiement',
+      'personne qui a encaissé',
+      'date de l\'encaissement',
+      'commentaires',
+      'date de création de la reservation'
+    ]; // Remplacez par les noms de vos colonnes
+    const rows = reservations.map(r => [
+      r.id,
+      r.state,
+      r.name,
+      r.tel,
+      r.email,
+      r.nbrAdult,
+      r.nbrTeen,
+      r.nbrKid,
+      r.payment.amount,
+      r.payment.type,
+      r.payment.personWhoReceivedPayment,
+      r.payment.dateTimePayment,
+      r.comments,
+      r.createDate]);
+
+    const csvData:string = Papa.unparse({
+      fields: headers,
+      data: rows
+    });
+
+
+
+    return csvData;
+  }
 }
 
