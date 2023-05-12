@@ -1,5 +1,5 @@
-<section *ngIf="statistic$ | async as stat" class="pannel gap-3 d-flex justify-content-center mt-3  mb-3">
-  <mat-card>
+<section *ngIf="statistic$ | async as stat" class="pannel gap-3 d-flex flex-wrap justify-content-center mt-3  mb-3">
+  <mat-card class="flex-grow-1">
     <mat-card-header>
       <mat-card-title>
         Argent récolté
@@ -10,7 +10,7 @@
     </mat-card-content>
   </mat-card>
 
-  <mat-card>
+  <mat-card class="flex-grow-1">
     <mat-card-header>
       <mat-card-title>
         Places adultes
@@ -46,7 +46,7 @@
     </mat-card-content>
   </mat-card>
 
-  <mat-card>
+  <mat-card class="flex-grow-1">
     <mat-card-header>
       <mat-card-title>
         Places adolescents
@@ -82,7 +82,7 @@
     </mat-card-content>
   </mat-card>
 
-  <mat-card>
+  <mat-card class="flex-grow-1">
     <mat-card-header>
       <mat-card-title>
         Places enfants
