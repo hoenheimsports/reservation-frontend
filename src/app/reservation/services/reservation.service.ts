@@ -70,8 +70,8 @@ export class ReservationService {
 
   }
 
-  cancelReservation(idReservation:string):Observable<IReservation | null> {
-    return this.http.get<IReservation>(environment.api+"/reservation/"+idReservation+"/cancel",this.authService.getHeaders());
+  cancelReservation(idReservation:string,message:string):Observable<IReservation | null> {
+    return this.http.put<IReservation>(environment.api+"/reservation/"+idReservation+"/cancel",{message:message},this.authService.getHeaders());
   }
 
   validateReservation(idReservation: string): Observable<IReservation | null> {

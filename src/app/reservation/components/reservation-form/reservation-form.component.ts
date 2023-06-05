@@ -23,6 +23,8 @@ import {AdultDialogComponent} from "../info-reservation-dialog/adult-dialog/adul
 })
 export class ReservationFormComponent {
 
+  full:boolean=false;
+
   environment!:any;
 
   loading!: boolean;

@@ -15,4 +15,5 @@ export interface IReservation {
   nbrMeal:number,
   createDate:Date,
   qrCodeBase64:string,
+  cancelMessage:string,
 }

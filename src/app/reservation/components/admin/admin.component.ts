@@ -40,6 +40,7 @@ export class AdminComponent implements OnInit {
   loading: boolean = false;
   formReceipt!: FormGroup;
   formRefund!: FormGroup;
+  formCancel!: FormGroup;
 
   reservationId!: string;
 
@@ -63,6 +64,10 @@ export class AdminComponent implements OnInit {
     this.formRefund = this.formBuilder.group({
       nameRefund: [null, [Validators.required]],
       paymentTypeRefund: ['cb']
+    })
+
+    this.formCancel = this.formBuilder.group({
+      message: [null,[Validators.required]],
     })
 
     Object.keys(this.breakpointColumnsMap).forEach(breakpoint => {
@@ -103,6 +108,7 @@ export class AdminComponent implements OnInit {
           }
         );
     } else {
+      this.loading = false;
       this.snackBar.open('Le formulaire n\'est pas valide (en rouge)', 'Fermer', {
         duration: 5000,
       })
@@ -124,25 +130,33 @@ export class AdminComponent implements OnInit {
           }
         );
     } else {
+      this.loading = false;
       this.snackBar.open('Le formulaire n\'est pas valide (en rouge)', 'Fermer', {
         duration: 5000,
       })
     }
   }
 
-  onCancel(): void {
+  onSubmitFormCancel(): void {
     this.loading = true;
-    this.reservationService.cancelReservation(this.reservationId)
+    if (this.formCancel.valid) {
+    this.reservationService.cancelReservation(this.reservationId,this.formCancel.get('message')?.value)
       .subscribe(
         reservation => {
           this.loading = false;
           this.reservation$ = of(reservation);
           this.upload();
-          this.snackBar.open('Reservation remboursée, le paiement est passé à rembourser et la reservation a été annulée', 'Fermer', {
+          this.snackBar.open('Reservation annulée, le paiement est passé à rembourser et la reservation a été annulée', 'Fermer', {
             duration: 3000,
           })
         }
       );
+    } else {
+      this.loading = false;
+      this.snackBar.open('Le formulaire n\'est pas valide (en rouge)', 'Fermer', {
+        duration: 5000,
+      })
+    }
   }
 
   onValidate() {

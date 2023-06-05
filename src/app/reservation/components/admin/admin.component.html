@@ -313,12 +313,17 @@
         <mat-card-header class="pt-2 ">
           <mat-card-subtitle class="text-center">Annulation</mat-card-subtitle>
         </mat-card-header>
-        <mat-card-content class="text-wrap" style="width: 25vw">
+        <mat-card-content class="text-wrap" style="width: 25vw" [formGroup]="formCancel">
           <p>Cette action va annuler la réservation. Si la personne a déjà réglé, veuillez effectuer un
             remboursement</p>
+          <mat-form-field>
+            <mat-label>Cause</mat-label>
+            <input matInput placeholder="Message envoyé au client" type="text" name="name" formControlName="message">
+            <mat-error>Champs requis</mat-error>
+          </mat-form-field>
         </mat-card-content>
         <mat-card-actions align="end">
-          <button mat-button color="warn" [disabled]="loading" (click)="onCancel()">
+          <button mat-button color="warn" [disabled]="loading" (click)="onSubmitFormCancel()">
             Annuler
           </button>
         </mat-card-actions>
