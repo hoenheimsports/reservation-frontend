@@ -13,6 +13,7 @@ import {MealDialogComponent} from "../info-reservation-dialog/meal-dialog/meal-d
 import {KidDialogComponent} from "../info-reservation-dialog/kid-dialog/kid-dialog.component";
 import {TeenDialogComponent} from "../info-reservation-dialog/teen-dialog/teen-dialog.component";
 import {AdultDialogComponent} from "../info-reservation-dialog/adult-dialog/adult-dialog.component";
+import {AuthService} from "../../../auth/service/auth.service";
 
 
 
@@ -24,6 +25,7 @@ import {AdultDialogComponent} from "../info-reservation-dialog/adult-dialog/adul
 export class ReservationFormComponent {
 
   full:boolean=false;
+  isAdmin:boolean=false;
 
   environment!:any;
 
@@ -45,10 +47,11 @@ export class ReservationFormComponent {
   amount$!: Observable<number>;
 
 
-  constructor(private dialog:MatDialog,private snackBar:MatSnackBar,private router: Router, private formBuilder: FormBuilder, private reservationService: ReservationService) {
+  constructor(private dialog:MatDialog,private snackBar:MatSnackBar,private router: Router, private formBuilder: FormBuilder, private reservationService: ReservationService, private auth: AuthService) {
   }
 
   ngOnInit(): void {
+    this.auth.isAuth().subscribe( isAuth => this.isAdmin = isAuth);
     this.environment = environment;
     this.loading = false;
     this.isSubmit = false;
