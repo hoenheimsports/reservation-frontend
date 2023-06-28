@@ -4,7 +4,13 @@
   </mat-card-header>
   <mat-card-content *ngIf="reservation$ | async as reservation; else nullTemplate">
     <div class="alert alert-success" *ngIf="reservation.state == 'ONGOING'">RESERVATION VALIDÉE</div>
-    <div class="alert alert-danger" *ngIf="reservation.state != 'ONGOING'">ERREUR -> {{reservation.state | reservationStateToFrench}}</div>
+    <div class="alert alert-danger" *ngIf="reservation.state != 'ONGOING'">
+      ERREUR ->
+      <br>
+      Réservation :  {{reservation.state | reservationStateToFrench}}
+      <br>
+      Payement : {{reservation.payment.paymentState | paymentStateToFrench}}
+    </div>
     <p><strong>Nom : {{reservation.name}}</strong></p>
     <p><strong>Numéro : {{reservation.id}}</strong></p>
     <table class="table">

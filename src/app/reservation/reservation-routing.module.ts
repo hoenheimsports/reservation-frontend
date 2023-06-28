@@ -7,6 +7,9 @@ import {AuthGuard} from "../core/gard/auth.guard";
 import {
   AdminReservationValidateComponent
 } from "./components/admin-reservation-validate/admin-reservation-validate.component";
+import {
+  AdminReservationValidatewithcodeComponent
+} from "./components/admin-reservation-validatewithcode/admin-reservation-validatewithcode.component";
 
 const routes: Routes = [
   { path: 'reserver', component: ReservationFormComponent },
@@ -14,7 +17,7 @@ const routes: Routes = [
   { path: 'admin', component: AdminComponent,canActivate:[(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => inject(AuthGuard).canActivate(route, state)] },
   { path: 'ma-reservation/:id', component: ReservationComponent },
   { path: ':id/validate', component: AdminReservationValidateComponent,canActivate:[(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => inject(AuthGuard).canActivate(route, state)] },
-
+  { path: 'validate', component: AdminReservationValidatewithcodeComponent,canActivate:[(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => inject(AuthGuard).canActivate(route, state)] },
   // Définition des autres routes de ce module si besoin
 ];
 

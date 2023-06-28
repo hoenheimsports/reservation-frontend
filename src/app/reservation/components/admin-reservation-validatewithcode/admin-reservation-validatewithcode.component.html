@@ -1,0 +1,13 @@
+<div class="d-flex justify-content-center">
+  <mat-form-field appearance="fill" class="m-3">
+    <mat-label>Chercher réservation</mat-label>
+    <input matInput placeholder="Ex : AAAAAA" type="text" [formControl]="reservationIdCtrl">
+    <span matTextPrefix>SA80&nbsp;</span>
+    <mat-error>Veuillez respectez le bon format de 6 caractères (sans le SA8)</mat-error>
+
+  </mat-form-field>
+
+</div>
+<div *ngIf="errorMessage" class="alert alert-danger">
+  {{ errorMessage }}
+</div>

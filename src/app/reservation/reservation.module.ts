@@ -16,6 +16,7 @@ import { AdultDialogComponent } from './components/info-reservation-dialog/adult
 import { TeenDialogComponent } from './components/info-reservation-dialog/teen-dialog/teen-dialog.component';
 import { KidDialogComponent } from './components/info-reservation-dialog/kid-dialog/kid-dialog.component';
 import { AdminReservationValidateComponent } from './components/admin-reservation-validate/admin-reservation-validate.component';
+import { AdminReservationValidatewithcodeComponent } from './components/admin-reservation-validatewithcode/admin-reservation-validatewithcode.component';
 
 
 
@@ -33,7 +34,8 @@ import { AdminReservationValidateComponent } from './components/admin-reservatio
     AdultDialogComponent,
     TeenDialogComponent,
     KidDialogComponent,
-    AdminReservationValidateComponent
+    AdminReservationValidateComponent,
+    AdminReservationValidatewithcodeComponent
   ],
     imports: [
         CommonModule,
